@@ -1,0 +1,45 @@
+---
+alwaysApply: true
+---
+ANIMATIONS & MOTION (KEEP IT SIMPLE)
+
+GENERAL RULES
+- Animations must clarify UI state changes, not decorate the UI.
+- Prefer CSS transitions for simple interactions.
+- Introduce JavaScript-driven animation only when CSS is insufficient.
+- Animations must be subtle, fast, and consistent across the app.
+
+DEFAULT ANIMATION MODELS
+- Fade: opacity transition (150–250ms)
+- Slide + fade: opacity + translate (150–250ms)
+- Scale + fade: opacity + scale (used for modals/popovers)
+- Layout animation: smooth height/position changes in lists
+- Skeleton shimmer: CSS keyframes only
+
+TOOLS
+- Use CSS transitions for:
+  - hover states
+  - button feedback
+  - simple open/close UI
+- Use Framer Motion ONLY for:
+  - route/page transitions
+  - modal enter/exit
+  - list item mount/unmount
+  - conditional rendering animations
+- Do NOT use Framer Motion for basic hover or styling effects.
+
+CONSTRAINTS
+- No custom animation frameworks.
+- No complex timelines or chained animations.
+- Avoid spring physics unless explicitly required.
+- Avoid animations that block user interaction.
+
+PERFORMANCE & ACCESSIBILITY
+- Respect prefers-reduced-motion.
+- Animations must not affect layout stability negatively.
+- Avoid animating expensive properties (width, height when possible).
+
+CODE STYLE
+- Animation logic must be colocated with UI components.
+- Reusable animation patterns should be abstracted into small helpers.
+- Do not mix animation logic with business logic.

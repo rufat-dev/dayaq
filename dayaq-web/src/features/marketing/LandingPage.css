@@ -1,0 +1,263 @@
+.hero {
+  padding-top: 2.5rem;
+  background: radial-gradient(circle at 10% 20%, rgba(20, 184, 166, 0.08), transparent 32%),
+    radial-gradient(circle at 90% 10%, rgba(14, 116, 144, 0.08), transparent 30%),
+    #f4f8f7;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.hero-copy h1 {
+  font-size: clamp(2rem, 3vw, 2.9rem);
+  margin: 0.25rem 0 0.75rem;
+}
+
+.accent {
+  color: #0f766e;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.hero-highlight {
+  color: #304341;
+  font-weight: 600;
+}
+
+.hero-card {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 12px 36px rgba(15, 47, 47, 0.12);
+  border: 1px solid #e1ebe7;
+}
+
+.hero-card h2 {
+  margin: 0;
+}
+
+.pillars h2,
+.coverage h2,
+.services h2,
+.steps h2,
+.testimonials h2,
+.faq h2 {
+  margin-bottom: 1.25rem;
+}
+
+.coverage-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: 2rem;
+  align-items: center;
+}
+
+.insurers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.insurer {
+  padding: 0.5rem 0.9rem;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #d5e7e2;
+  font-weight: 600;
+  color: #0f2f2f;
+}
+
+.checklist {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+  display: grid;
+  gap: 0.5rem;
+  color: #304341;
+}
+
+.checklist li::before {
+  content: '✓';
+  color: #0f766e;
+  font-weight: 800;
+  margin-right: 0.5rem;
+}
+
+.services .btn {
+  margin-top: 0.5rem;
+}
+
+.steps .step-index {
+  font-weight: 800;
+  color: #0f766e;
+  margin-bottom: 0.35rem;
+}
+
+.quote {
+  position: relative;
+}
+
+.quote p {
+  margin: 0 0 0.75rem;
+  color: #0f2f2f;
+}
+
+.quote::before {
+  content: '“';
+  position: absolute;
+  top: -0.5rem;
+  left: -0.4rem;
+  font-size: 2.5rem;
+  color: #d7ebe6;
+}
+
+.faq-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.faq-item {
+  border: 1px solid #dbe7e4;
+  border-radius: 14px;
+  padding: 0.9rem 1rem;
+  background: #fff;
+}
+
+.faq-item summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: #0f2f2f;
+}
+
+.faq-item p {
+  margin: 0.6rem 0 0;
+  color: #304341;
+}
+
+.site-footer {
+  background: #0b1f1f;
+  color: #d7ebe6;
+  padding: 3rem 0 2rem;
+  margin-top: 1rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.site-footer .brand {
+  color: #fff;
+}
+
+.muted {
+  color: #b6c9c4;
+}
+
+.site-footer h4 {
+  margin: 0 0 0.5rem;
+  color: #ffffff;
+}
+
+.site-footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.footer-bottom {
+  margin-top: 2rem;
+  border-top: 1px solid #1f3333;
+  padding-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 0.75rem;
+  color: #b6c9c4;
+}
+
+.landing-page {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.landing-page--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-page {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.btn.login-btn {
+  background: rgba(26, 143, 132, 0.12);
+  color: #1a8f84;
+  border-color: #9fd7cf;
+}
+
+.btn.login-btn:hover {
+  background: rgba(26, 143, 132, 0.18);
+  border-color: #7fc9bf;
+}
+
+.login-overlay {
+  position: fixed;
+  inset: 0;
+  background: #e9f5f2;
+  opacity: 0;
+  transform: scale(0.04);
+  transform-origin: var(--login-origin-x, 100%) var(--login-origin-y, 0%);
+  pointer-events: none;
+  transition: transform 200ms ease, opacity 200ms ease;
+  border-radius: 24px;
+  z-index: 12;
+}
+
+.login-overlay--active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-overlay {
+    transition: none;
+    opacity: 0;
+    transform: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .coverage-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

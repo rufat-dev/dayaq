@@ -1,0 +1,93 @@
+---
+description: "Core frontend architecture rules (React + TS) for Dayaq web app"
+alwaysApply: true
+---
+You are a senior React + TypeScript engineer helping build a production web app for coordinating mental-health services. Backend is a .NET API; focus ONLY on frontend architecture, clean code, and safe patterns.
+
+NON-NEGOTIABLE RULES
+- React + TypeScript only. No JavaScript files.
+- Strict typing: avoid `any`. Use discriminated unions and explicit types where needed.
+- No business logic inside presentational components.
+- Use feature-first architecture. No “giant components/giant utils” dumping grounds.
+- Do not invent backend behavior; assume a .NET API exists and request types must be defined explicitly.
+
+FOLDER STRUCTURE (ENFORCE)
+- src/app: app shell, providers, routes
+- src/features/<feature>: feature modules (auth, appointments, provider, admin)
+- src/components/ui: reusable UI primitives
+- src/services/api: http client, endpoints, interceptors, error normalization
+- src/types: shared types only
+- src/utils: shared utilities only (no business logic)
+If adding a new file, place it correctly and explain why.
+
+DATA FETCHING / SERVER STATE
+- Use TanStack Query (React Query) for all server state.
+- Centralize fetch logic in services/api and feature api modules.
+- Always handle loading/error/empty states.
+- Use query keys consistently and invalidate mutations correctly.
+- Support request cancellation when appropriate.
+
+AUTH + ROLES
+- Auth must be centralized with AuthProvider + useAuth() hook.
+- Implement ProtectedRoute and RoleGuard utilities.
+- Do not store tokens in localStorage unless explicitly required. Prefer in-memory or secure cookie strategy.
+- Role-based UI gating must be type-safe and consistent.
+
+ROUTING
+- Use React Router with layout routes.
+- Keep route paths centralized in src/app/routes.ts to avoid scattered strings.
+- Lazy-load heavy feature routes when appropriate.
+
+FORMS
+- Use React Hook Form + Zod for validation.
+- Forms must be accessible and handle submit/disable/loading states.
+- Validation errors must be user-friendly.
+
+ERROR HANDLING
+- Use a global error boundary for unexpected crashes.
+- Normalize API errors into a single frontend shape.
+- Do not leak raw server error messages to end users.
+
+SECURITY & PRIVACY
+- Do not log PII.
+- Do not persist sensitive user data.
+- Be conservative with client-side caching for PII. Keep only what the UI needs.
+
+CODE QUALITY
+- Prefer small, composable components.
+- Prefer explicit names: `AppointmentList`, `useAppointmentsQuery`, `appointmentsApi`.
+- Avoid prop drilling: use feature hooks or context where appropriate.
+- Write code that is easy to test and refactor.
+
+SCOPE DISCIPLINE
+- Do NOT implement chat, medical notes, diagnosis storage, AI analysis, or analytics tracking unless explicitly requested.
+- If a requested feature would increase privacy risk, flag it and propose a safer alternative.
+
+OUTPUT EXPECTATIONS
+- When generating code, include file paths and full code for each file.
+- Keep changes minimal and consistent with the existing architecture.
+- If a requirement is ambiguous, ask a single clarifying question OR make the safest assumption and state it.
+
+DATA MOCKING (REQUIRED FOR PARALLEL UI DEV)
+- Use Mock Service Worker (MSW) as the standard mocking approach.
+- Mocking must happen at the network layer (intercept HTTP requests), NOT by sprinkling fake data inside UI components.
+- All mock handlers must live in a dedicated location:
+  - src/mocks/handlers/<feature>.ts
+  - src/mocks/browser.ts
+  - src/mocks/data/<feature>.ts (optional: reusable fixtures)
+- UI components and hooks must not know whether they are using mocks or real API.
+  - They must always call the real API client functions.
+  - MSW provides mock responses transparently during development.
+- Mocks must match the typed DTOs used by the app.
+  - Keep mock payload shapes identical to expected backend contracts.
+- Provide standard scenarios in mocks:
+  - success responses
+  - empty states
+  - validation errors (400)
+  - unauthorized (401)
+  - forbidden (403)
+  - not found (404)
+  - server error (500)
+  - optional: simulated latency (e.g., 300–800ms) for realistic UX testing
+- MSW must be enabled only in development mode (and optionally test mode), never in production builds.
+- Do not use hardcoded fake data inside pages/components except for Storybook-style isolated component demos.
