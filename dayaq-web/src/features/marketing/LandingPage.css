@@ -1,50 +1,3 @@
-.hero {
-  padding-top: 2.5rem;
-  background: radial-gradient(circle at 10% 20%, rgba(20, 184, 166, 0.08), transparent 32%),
-    radial-gradient(circle at 90% 10%, rgba(14, 116, 144, 0.08), transparent 30%),
-    #f4f8f7;
-}
-
-.hero-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2.5rem;
-  align-items: start;
-}
-
-.hero-copy h1 {
-  font-size: clamp(2rem, 3vw, 2.9rem);
-  margin: 0.25rem 0 0.75rem;
-}
-
-.accent {
-  color: #0f766e;
-}
-
-.hero-cta {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  margin-bottom: 0.75rem;
-}
-
-.hero-highlight {
-  color: #304341;
-  font-weight: 600;
-}
-
-.hero-card {
-  background: white;
-  border-radius: 16px;
-  padding: 1.5rem;
-  box-shadow: 0 12px 36px rgba(15, 47, 47, 0.12);
-  border: 1px solid #e1ebe7;
-}
-
-.hero-card h2 {
-  margin: 0;
-}
-
 .pillars h2,
 .coverage h2,
 .services h2,
@@ -70,11 +23,11 @@
 
 .insurer {
   padding: 0.5rem 0.9rem;
-  background: #ffffff;
+  background: var(--color-surface);
   border-radius: 12px;
-  border: 1px solid #d5e7e2;
+  border: 1px solid var(--color-border);
   font-weight: 600;
-  color: #0f2f2f;
+  color: var(--color-text-primary);
 }
 
 .checklist {
@@ -83,12 +36,12 @@
   margin: 1rem 0;
   display: grid;
   gap: 0.5rem;
-  color: #304341;
+  color: var(--color-text-secondary);
 }
 
 .checklist li::before {
   content: '✓';
-  color: #0f766e;
+  color: var(--color-primary);
   font-weight: 800;
   margin-right: 0.5rem;
 }
@@ -99,7 +52,7 @@
 
 .steps .step-index {
   font-weight: 800;
-  color: #0f766e;
+  color: var(--color-primary);
   margin-bottom: 0.35rem;
 }
 
@@ -109,7 +62,7 @@
 
 .quote p {
   margin: 0 0 0.75rem;
-  color: #0f2f2f;
+  color: var(--color-text-primary);
 }
 
 .quote::before {
@@ -118,7 +71,7 @@
   top: -0.5rem;
   left: -0.4rem;
   font-size: 2.5rem;
-  color: #d7ebe6;
+  color: var(--color-surface-alt);
 }
 
 .faq-list {
@@ -127,26 +80,26 @@
 }
 
 .faq-item {
-  border: 1px solid #dbe7e4;
+  border: 1px solid var(--color-border);
   border-radius: 14px;
   padding: 0.9rem 1rem;
-  background: #fff;
+  background: var(--color-surface);
 }
 
 .faq-item summary {
   cursor: pointer;
   font-weight: 700;
-  color: #0f2f2f;
+  color: var(--color-text-primary);
 }
 
 .faq-item p {
   margin: 0.6rem 0 0;
-  color: #304341;
+  color: var(--color-text-secondary);
 }
 
 .site-footer {
-  background: #0b1f1f;
-  color: #d7ebe6;
+  background: var(--color-card);
+  color: #f5f7ff;
   padding: 3rem 0 2rem;
   margin-top: 1rem;
 }
@@ -158,16 +111,16 @@
 }
 
 .site-footer .brand {
-  color: #fff;
+  color: var(--color-primary);
 }
 
 .muted {
-  color: #b6c9c4;
+  color: var(--color-muted);
 }
 
 .site-footer h4 {
   margin: 0 0 0.5rem;
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .site-footer ul {
@@ -180,7 +133,7 @@
 
 .footer-bottom {
   margin-top: 2rem;
-  border-top: 1px solid #1f3333;
+  border-top: 1px solid var(--color-border);
   padding-top: 1rem;
   display: flex;
   justify-content: space-between;
@@ -192,7 +145,7 @@
 .footer-links {
   display: flex;
   gap: 0.75rem;
-  color: #b6c9c4;
+  color: var(--color-muted);
 }
 
 .landing-page {
@@ -215,20 +168,20 @@
 }
 
 .btn.login-btn {
-  background: rgba(26, 143, 132, 0.12);
-  color: #1a8f84;
-  border-color: #9fd7cf;
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--color-primary);
+  border-color: var(--color-border);
 }
 
 .btn.login-btn:hover {
-  background: rgba(26, 143, 132, 0.18);
-  border-color: #7fc9bf;
+  background: rgba(255, 255, 255, 0.35);
+  border-color: var(--color-primary);
 }
 
-.login-overlay {
+.nav-overlay {
   position: fixed;
   inset: 0;
-  background: #e9f5f2;
+  background: var(--transition-overlay);
   opacity: 0;
   transform: scale(0.04);
   transform-origin: var(--login-origin-x, 100%) var(--login-origin-y, 0%);
@@ -238,13 +191,13 @@
   z-index: 12;
 }
 
-.login-overlay--active {
+.nav-overlay--active {
   opacity: 1;
   transform: scale(1);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .login-overlay {
+  .nav-overlay {
     transition: none;
     opacity: 0;
     transform: none;

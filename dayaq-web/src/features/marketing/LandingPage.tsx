@@ -4,10 +4,14 @@ import { useNavigate } from 'react-router-dom'
 
 import { routes } from '@app/routes'
 import { useI18n } from '@app/i18n/I18nProvider'
+import { HeroSection } from '@components/HeroSection'
+import { LanguageSwitcher, ThemeToggle } from '@components/HeaderControls'
 import './LandingPage.css'
 
 export function LandingPage() {
   const [isVisible, setIsVisible] = useState(false)
+  const { t } = useI18n()
+  const { hero } = t.landing
 
   useEffect(() => {
     const prefersReducedMotion =
@@ -28,7 +32,24 @@ export function LandingPage() {
     <div className={`page landing-page ${isVisible ? 'landing-page--visible' : ''}`}>
       <Header />
       <main>
-        <Hero />
+        <section className="section hero">
+          <div className="container hero-grid">
+            <div className="hero-copy">
+              <p className="pill">{hero.pill}</p>
+              <h1>
+                {hero.heading}
+                <span className="accent">{hero.accent}</span>
+              </h1>
+              <p className="lede">{hero.lede}</p>
+              <div className="hero-cta">
+                <button className="btn primary">{hero.ctaPrimary}</button>
+                <button className="btn secondary">{hero.ctaSecondary}</button>
+              </div>
+              <div className="hero-highlight">{hero.highlight}</div>
+            </div>
+            <HeroSection />
+          </div>
+        </section>
         <Pillars />
         <Coverage />
         <Services />
@@ -48,9 +69,10 @@ function Header() {
   const commonCopy = t.common
   const [isLoginAnimating, setIsLoginAnimating] = useState(false)
   const loginButtonRef = useRef<HTMLButtonElement | null>(null)
+  const registerButtonRef = useRef<HTMLButtonElement | null>(null)
   const [overlayOrigin, setOverlayOrigin] = useState<{ x: number; y: number } | null>(null)
 
-  const handleLoginClick = () => {
+  const handleNavigation = (path: string, triggerRef?: { current: HTMLButtonElement | null }) => {
     if (isLoginAnimating) return
     const prefersReducedMotion =
       typeof window !== 'undefined' &&
@@ -58,12 +80,12 @@ function Header() {
       window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     if (prefersReducedMotion) {
-      navigate(routes.login)
+      navigate(path)
       return
     }
 
-    if (loginButtonRef.current) {
-      const rect = loginButtonRef.current.getBoundingClientRect()
+    if (triggerRef?.current) {
+      const rect = triggerRef.current.getBoundingClientRect()
       const nextOrigin = {
         x: rect.left + rect.width / 2,
         y: rect.top + rect.height / 2,
@@ -78,9 +100,7 @@ function Header() {
     }
 
     setIsLoginAnimating(true)
-    window.setTimeout(() => navigate(routes.login), 200)
-
-    // navigate(routes.login)
+    window.setTimeout(() => navigate(path), 200)
   }
 
   const overlayStyle = useMemo<CSSProperties | undefined>(() => {
@@ -112,71 +132,31 @@ function Header() {
             </ul>
           </nav>
           <div className="header-actions">
-            <button className="btn ghost" onClick={handleLoginClick}>
+            <button
+              ref={loginButtonRef}
+              className="btn ghost"
+              onClick={() => handleNavigation(routes.login, loginButtonRef)}
+            >
               {landingCopy.header.login}
             </button>
-            <button className="btn primary">{landingCopy.header.getStarted}</button>
+            <button
+              ref={registerButtonRef}
+              className="btn primary"
+              onClick={() => handleNavigation(routes.register, registerButtonRef)}
+            >
+              {landingCopy.header.getStarted}
+            </button>
+            <LanguageSwitcher />
+            <ThemeToggle />
           </div>
         </div>
       </header>
       <div
-        className={`login-overlay ${isLoginAnimating ? 'login-overlay--active' : ''}`}
+        className={`nav-overlay ${isLoginAnimating ? 'nav-overlay--active' : ''}`}
         style={overlayStyle}
         aria-hidden
       />
     </>
-  )
-}
-
-function Hero() {
-  const { t } = useI18n()
-  const { hero } = t.landing
-  return (
-    <section className="section hero">
-      <div className="container hero-grid">
-        <div className="hero-copy">
-          <p className="pill">{hero.pill}</p>
-          <h1>
-            {hero.heading}
-            <span className="accent">{hero.accent}</span>
-          </h1>
-          <p className="lede">{hero.lede}</p>
-          <div className="hero-cta">
-            <button className="btn primary">{hero.ctaPrimary}</button>
-            <button className="btn secondary">{hero.ctaSecondary}</button>
-          </div>
-          <div className="hero-highlight">
-            {hero.highlight}
-          </div>
-        </div>
-        <div className="hero-card" id="coverage">
-          <h2>{hero.form.title}</h2>
-          <p className="muted">{hero.form.subtitle}</p>
-          <form className="stack" aria-label="Quick intake (example)">
-            <label className="field">
-              <span>{hero.form.fullName}</span>
-              <input type="text" defaultValue={hero.form.seededFullName} />
-            </label>
-            <label className="field">
-              <span>{hero.form.email}</span>
-              <input type="email" defaultValue={hero.form.seededEmail} />
-            </label>
-            <label className="field">
-              <span>{hero.form.location}</span>
-              <input type="text" defaultValue={hero.form.seededLocation} />
-            </label>
-            <label className="field">
-              <span>{hero.form.reason}</span>
-              <textarea rows={3} defaultValue={hero.form.seededReason} />
-            </label>
-            <button type="button" className="btn primary full">
-              {hero.form.submit}
-            </button>
-            <p className="fine-print">{hero.form.disclaimer}</p>
-          </form>
-        </div>
-      </div>
-    </section>
   )
 }
 

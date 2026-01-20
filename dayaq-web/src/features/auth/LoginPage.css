@@ -11,7 +11,8 @@
 }
 
 .login-page {
-  background: #e9f5f2;
+  background: var(--color-surface);
+  color: var(--color-text-primary);
   min-height: 100vh;
   position: relative;
   z-index: 13;

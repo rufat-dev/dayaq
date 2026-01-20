@@ -1,0 +1,47 @@
+.hero {
+  padding-top: 2.5rem;
+  background: radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.35), transparent 32%),
+    radial-gradient(circle at 90% 10%, rgba(255, 255, 255, 0.2), transparent 30%),
+    var(--color-surface);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.hero-copy h1 {
+  font-size: clamp(2rem, 3vw, 2.9rem);
+  margin: 0.25rem 0 0.75rem;
+}
+
+.accent {
+  color: var(--color-primary-strong);
+}
+
+.hero-cta {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.hero-highlight {
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
+.hero-card {
+  background: var(--color-card);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--color-shadow);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+}
+
+.hero-card h2 {
+  margin: 0;
+}
