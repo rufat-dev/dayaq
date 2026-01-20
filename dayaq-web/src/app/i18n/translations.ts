@@ -120,6 +120,36 @@ type LoginTranslations = {
   backHome: string
 }
 
+type UserCategorySelectionTranslations = {
+  heading: string
+  lede: string
+  categories: {
+    organization: string
+    professional: string
+    client: string
+  }
+  backHome: string
+}
+
+type AdminLoginTranslations = {
+  heading: string
+  lede: string
+  form: {
+    username: string
+    password: string
+    usernamePlaceholder: string
+    passwordPlaceholder: string
+    submit: string
+  }
+  backHome: string
+}
+
+type AdminPanelTranslations = {
+  heading: string
+  lede: string
+  signOut: string
+}
+
 type CommonTranslations = {
   brand: string
 }
@@ -128,6 +158,9 @@ export type AppTranslations = {
   common: CommonTranslations
   landing: LandingTranslations
   login: LoginTranslations
+  userCategorySelection: UserCategorySelectionTranslations
+  adminLogin: AdminLoginTranslations
+  adminPanel: AdminPanelTranslations
 }
 
 export const translations: Record<Locale, AppTranslations> = {
@@ -319,6 +352,33 @@ export const translations: Record<Locale, AppTranslations> = {
         emailError: 'Enter a valid email address',
         passwordError: 'Password must be at least 8 characters',
       },
+    },
+    userCategorySelection: {
+      heading: 'Choose your account type',
+      lede: 'Select the category that best describes you to continue registration.',
+      categories: {
+        organization: 'Organization',
+        professional: 'Professional',
+        client: 'Client',
+      },
+      backHome: 'Back to home',
+    },
+    adminLogin: {
+      heading: 'Admin access',
+      lede: 'Enter your admin credentials to continue.',
+      form: {
+        username: 'Admin username',
+        password: 'Admin password',
+        usernamePlaceholder: 'Enter admin username',
+        passwordPlaceholder: 'Enter admin password',
+        submit: 'Sign in',
+      },
+      backHome: 'Back to home',
+    },
+    adminPanel: {
+      heading: 'Admin panel',
+      lede: 'You are signed in with administrative access.',
+      signOut: 'Sign out',
     },
   },
   az: {
@@ -523,6 +583,33 @@ export const translations: Record<Locale, AppTranslations> = {
         emailError: 'Etibarlı email daxil edin',
         passwordError: 'Şifrə ən az 8 simvol olmalıdır',
       },
+    },
+    userCategorySelection: {
+      heading: 'Hesab növünü seçin',
+      lede: 'Qeydiyyata davam etmək üçün sizə uyğun kateqoriyanı seçin.',
+      categories: {
+        organization: 'Təşkilat',
+        professional: 'Peşəkar',
+        client: 'Müştəri',
+      },
+      backHome: 'Ana səhifəyə qayıt',
+    },
+    adminLogin: {
+      heading: 'Admin girişi',
+      lede: 'Davam etmək üçün admin məlumatlarınızı daxil edin.',
+      form: {
+        username: 'Admin istifadəçi adı',
+        password: 'Admin şifrəsi',
+        usernamePlaceholder: 'Admin istifadəçi adını daxil edin',
+        passwordPlaceholder: 'Admin şifrəsini daxil edin',
+        submit: 'Daxil ol',
+      },
+      backHome: 'Ana səhifəyə qayıt',
+    },
+    adminPanel: {
+      heading: 'Admin paneli',
+      lede: 'Siz admin səlahiyyətləri ilə daxil oldunuz.',
+      signOut: 'Çıxış et',
     },
   },
   tr: {
@@ -729,6 +816,33 @@ export const translations: Record<Locale, AppTranslations> = {
         passwordError: 'Şifre en az 8 karakter olmalıdır',
       },
     },
+    userCategorySelection: {
+      heading: 'Hesap türünü seçin',
+      lede: 'Kayda devam etmek için size uygun kategoriyi seçin.',
+      categories: {
+        organization: 'Kurum',
+        professional: 'Profesyonel',
+        client: 'Danışan',
+      },
+      backHome: 'Ana sayfaya dön',
+    },
+    adminLogin: {
+      heading: 'Yönetici girişi',
+      lede: 'Devam etmek için yönetici bilgilerinizi girin.',
+      form: {
+        username: 'Yönetici kullanıcı adı',
+        password: 'Yönetici şifresi',
+        usernamePlaceholder: 'Yönetici kullanıcı adını girin',
+        passwordPlaceholder: 'Yönetici şifresini girin',
+        submit: 'Giriş yap',
+      },
+      backHome: 'Ana sayfaya dön',
+    },
+    adminPanel: {
+      heading: 'Yönetici paneli',
+      lede: 'Yönetici erişimiyle giriş yaptınız.',
+      signOut: 'Çıkış yap',
+    },
   },
   ru: {
     common: {
@@ -934,6 +1048,33 @@ export const translations: Record<Locale, AppTranslations> = {
         emailError: 'Введите корректный e-mail',
         passwordError: 'Пароль должен содержать минимум 8 символов',
       },
+    },
+    userCategorySelection: {
+      heading: 'Выберите тип аккаунта',
+      lede: 'Выберите категорию, которая лучше всего описывает вас, чтобы продолжить регистрацию.',
+      categories: {
+        organization: 'Организация',
+        professional: 'Специалист',
+        client: 'Клиент',
+      },
+      backHome: 'На главную',
+    },
+    adminLogin: {
+      heading: 'Админ-доступ',
+      lede: 'Введите учетные данные администратора, чтобы продолжить.',
+      form: {
+        username: 'Имя администратора',
+        password: 'Пароль администратора',
+        usernamePlaceholder: 'Введите имя администратора',
+        passwordPlaceholder: 'Введите пароль администратора',
+        submit: 'Войти',
+      },
+      backHome: 'На главную',
+    },
+    adminPanel: {
+      heading: 'Админ-панель',
+      lede: 'Вы вошли с административным доступом.',
+      signOut: 'Выйти',
     },
   },
 }

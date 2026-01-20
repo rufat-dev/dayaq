@@ -10,6 +10,13 @@
   font-size: 0.95rem;
 }
 
+.login-page main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 3rem 0;
+  min-height: calc(100vh - 80px);
+}
 .login-page {
   background: var(--color-surface);
   color: var(--color-text-primary);
@@ -42,3 +49,10 @@
   }
 }
 
+.login-lede {
+  margin: 0;
+}
+
+.login-form {
+  margin-top: 0;
+}

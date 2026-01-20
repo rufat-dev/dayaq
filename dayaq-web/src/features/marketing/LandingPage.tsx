@@ -142,7 +142,7 @@ function Header() {
             <button
               ref={registerButtonRef}
               className="btn primary"
-              onClick={() => handleNavigation(routes.register, registerButtonRef)}
+              onClick={() => handleNavigation(routes.userCategorySelection, registerButtonRef)}
             >
               {landingCopy.header.getStarted}
             </button>
@@ -312,7 +312,7 @@ function Footer() {
           <h4>{footer.exploreHeading}</h4>
           <ul>
             {footer.explore.map((link) => (
-              <li key={link}>
+              <li key={link} className="site-footer-link">
                 <a href="#services">{link}</a>
               </li>
             ))}

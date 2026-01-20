@@ -214,3 +214,6 @@
   }
 }
 
+.site-footer-link {
+  color: var(--color-muted);
+}

@@ -1,21 +1,21 @@
-.registration-page {
+.admin-panel-page {
   background: var(--color-surface);
   color: var(--color-text-primary);
   min-height: 100vh;
   position: relative;
   z-index: 13;
   opacity: 0;
-  transform: scale(0.985);
   transform-origin: var(--login-origin-x, 100%) var(--login-origin-y, 0%);
+  transform: scale(0.985);
   transition: opacity 200ms ease, transform 200ms ease;
 }
 
-.registration-page--visible {
+.admin-panel-page--visible {
   opacity: 1;
   transform: scale(1);
 }
 
-.registration-page--exit {
+.admin-panel-page--exit {
   opacity: 0;
   transform-origin: var(--login-origin-x, 100%) var(--login-origin-y, 0%);
   transform: scale(0.985);
@@ -23,17 +23,22 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .registration-page {
+  .admin-panel-page {
     transition: none;
     opacity: 1;
     transform: none;
   }
 }
 
-.registration-page main {
+.admin-panel-page main {
   display: flex;
   justify-content: center;
   align-items: flex-start;
   padding: 1rem 0;
   min-height: calc(100vh - 80px);
+}
+
+.admin-panel-card {
+  display: grid;
+  gap: 0.75rem;
 }

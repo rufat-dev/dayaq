@@ -97,9 +97,9 @@ function LoginPage() {
           <div className="card lifted">
             <p className="pill pill-ghost">{copy.existingMembers}</p>
             <h1>{copy.heading}</h1>
-            <p className="lede">{copy.lede}</p>
+            <p className="lede login-lede">{copy.lede}</p>
 
-            <form className="stack" onSubmit={onSubmit} noValidate>
+            <form className="stack login-form" onSubmit={onSubmit} noValidate>
               <label className="field">
                 <span>{copy.form.email}</span>
                 <input
