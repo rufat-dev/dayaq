@@ -150,6 +150,19 @@ type AdminPanelTranslations = {
   signOut: string
 }
 
+type ForbiddenTranslations = {
+  heading: string
+  lede: string
+  backHome: string
+  ctaByRole: {
+    admin: string
+    organization: string
+    professional: string
+    client: string
+    default: string
+  }
+}
+
 type CommonTranslations = {
   brand: string
 }
@@ -161,6 +174,7 @@ export type AppTranslations = {
   userCategorySelection: UserCategorySelectionTranslations
   adminLogin: AdminLoginTranslations
   adminPanel: AdminPanelTranslations
+  forbidden: ForbiddenTranslations
 }
 
 export const translations: Record<Locale, AppTranslations> = {
@@ -379,6 +393,18 @@ export const translations: Record<Locale, AppTranslations> = {
       heading: 'Admin panel',
       lede: 'You are signed in with administrative access.',
       signOut: 'Sign out',
+    },
+    forbidden: {
+      heading: '403: Forbidden',
+      lede: 'You do not have access to this page. Sign in with the right account to continue.',
+      backHome: 'Back to home',
+      ctaByRole: {
+        admin: 'Go to admin login',
+        organization: 'Go to organization login',
+        professional: 'Go to professional login',
+        client: 'Go to client login',
+        default: 'Go to login',
+      },
     },
   },
   az: {
@@ -610,6 +636,18 @@ export const translations: Record<Locale, AppTranslations> = {
       heading: 'Admin paneli',
       lede: 'Siz admin səlahiyyətləri ilə daxil oldunuz.',
       signOut: 'Çıxış et',
+    },
+    forbidden: {
+      heading: '403: Giriş qadağandır',
+      lede: 'Bu səhifəyə giriş icazəniz yoxdur. Davam etmək üçün uyğun hesabla daxil olun.',
+      backHome: 'Ana səhifəyə qayıt',
+      ctaByRole: {
+        admin: 'Admin girişinə keç',
+        organization: 'Təşkilat girişinə keç',
+        professional: 'Peşəkar girişinə keç',
+        client: 'Müştəri girişinə keç',
+        default: 'Girişə keç',
+      },
     },
   },
   tr: {
@@ -843,6 +881,18 @@ export const translations: Record<Locale, AppTranslations> = {
       lede: 'Yönetici erişimiyle giriş yaptınız.',
       signOut: 'Çıkış yap',
     },
+    forbidden: {
+      heading: '403: Erişim reddedildi',
+      lede: 'Bu sayfaya erişiminiz yok. Devam etmek için doğru hesapla giriş yapın.',
+      backHome: 'Ana sayfaya dön',
+      ctaByRole: {
+        admin: 'Yönetici girişine git',
+        organization: 'Kurum girişine git',
+        professional: 'Profesyonel girişine git',
+        client: 'Danışan girişine git',
+        default: 'Girişe git',
+      },
+    },
   },
   ru: {
     common: {
@@ -1075,6 +1125,18 @@ export const translations: Record<Locale, AppTranslations> = {
       heading: 'Админ-панель',
       lede: 'Вы вошли с административным доступом.',
       signOut: 'Выйти',
+    },
+    forbidden: {
+      heading: '403: Доступ запрещен',
+      lede: 'У вас нет доступа к этой странице. Войдите под подходящей ролью, чтобы продолжить.',
+      backHome: 'На главную',
+      ctaByRole: {
+        admin: 'Перейти к входу администратора',
+        organization: 'Перейти к входу организации',
+        professional: 'Перейти к входу специалиста',
+        client: 'Перейти к входу клиента',
+        default: 'Перейти к входу',
+      },
     },
   },
 }
