@@ -13,6 +13,7 @@ import RegistrationPage from '@features/auth/RegistrationPage'
 import UserCategorySelectionPage from '@features/auth/UserCategorySelectionPage'
 import AdminLoginPage from '@features/auth/AdminLoginPage'
 import AdminPanelPage from '@features/admin/AdminPanelPage'
+import ForbiddenPage from '@features/auth/ForbiddenPage'
 
 function App() {
   useEffect(() => {
@@ -30,13 +31,14 @@ function App() {
             <Route path={routes.home} element={<LandingPage />} />
             <Route path={routes.login} element={<LoginPage />} />
             <Route path={routes.adminLogin} element={<AdminLoginPage />} />
+            <Route path={routes.forbidden} element={<ForbiddenPage />} />
             <Route path={routes.userCategorySelection} element={<UserCategorySelectionPage />} />
             <Route path={routes.register} element={<RegistrationPage />} />
             <Route
               path={routes.adminPanel}
               element={
-                <ProtectedRoute redirectTo={routes.adminLogin}>
-                  <RoleGuard allowedRoles={['admin']} redirectTo={routes.adminLogin}>
+                <ProtectedRoute requiredRoles={['admin']}>
+                  <RoleGuard allowedRoles={['admin']}>
                     <AdminPanelPage />
                   </RoleGuard>
                 </ProtectedRoute>

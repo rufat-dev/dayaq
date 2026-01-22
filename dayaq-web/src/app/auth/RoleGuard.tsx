@@ -1,5 +1,5 @@
-import { ReactNode } from 'react'
-import { Navigate } from 'react-router-dom'
+import type { ReactNode } from 'react'
+import { Navigate, useLocation } from 'react-router-dom'
 
 import { routes } from '@app/routes'
 import { useAuth } from './AuthProvider'
@@ -11,11 +11,21 @@ type Props = {
   redirectTo?: string
 }
 
-export function RoleGuard({ children, allowedRoles, redirectTo = routes.adminLogin }: Props) {
+export function RoleGuard({ children, allowedRoles, redirectTo = routes.forbidden }: Props) {
   const { role } = useAuth()
+  const location = useLocation()
 
   if (!role || !allowedRoles.includes(role)) {
-    return <Navigate to={redirectTo} replace />
+    return (
+      <Navigate
+        to={redirectTo}
+        replace
+        state={{
+          from: location.pathname,
+          requiredRoles: allowedRoles,
+        }}
+      />
+    )
   }
 
   return children
