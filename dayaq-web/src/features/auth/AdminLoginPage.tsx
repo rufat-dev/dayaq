@@ -5,12 +5,16 @@ import { useAuth } from '@app/auth/AuthProvider'
 import { useI18n } from '@app/i18n/I18nProvider'
 import { routes } from '@app/routes'
 import { LanguageSwitcher, ThemeToggle } from '@components/HeaderControls'
+import { login as loginRequest } from '@services/api/authApi'
+import { ApiError } from '@services/api/httpClient'
+import { getResultErrorMessage } from '@utils/apiErrors'
+import { getDeviceInfo } from '@utils/deviceInfo'
 import './AdminLoginPage.css'
 
 function AdminLoginPage() {
   const navigate = useNavigate()
   const location = useLocation()
-  const { login, isAuthenticated, role } = useAuth()
+  const { login: setSession, isAuthenticated, role } = useAuth()
   const { t } = useI18n()
   const commonCopy = t.common
   const copy = t.adminLogin
@@ -18,6 +22,8 @@ function AdminLoginPage() {
   const [isExiting, setIsExiting] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [status, setStatus] = useState<'idle' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   useEffect(() => {
     const id = requestAnimationFrame(() => setIsVisible(true))
@@ -50,10 +56,29 @@ function AdminLoginPage() {
     window.setTimeout(() => navigate(routes.home), 200)
   }
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    login({ token: 'mock-admin-jwt', role: 'admin' })
-    navigate(routes.adminPanel)
+    setStatus('idle')
+    setErrorMessage(null)
+    try {
+      const response = await loginRequest({
+        Username: username,
+        Password: password,
+        DeviceInfo: getDeviceInfo(),
+      })
+      setSession({ token: response.accessToken, role: 'admin' })
+      navigate(routes.adminPanel)
+    } catch (error) {
+      setStatus('error')
+      if (error instanceof ApiError) {
+        const apiMessage = getResultErrorMessage(error.data)
+        if (apiMessage) {
+          setErrorMessage(apiMessage)
+          return
+        }
+      }
+      setErrorMessage('Unable to sign in. Please try again.')
+    }
   }
 
   return (
@@ -104,6 +129,11 @@ function AdminLoginPage() {
               <button className="btn primary full" type="submit">
                 {copy.form.submit}
               </button>
+              {status === 'error' ? (
+                <p className="form-status form-status--error" role="alert">
+                  {errorMessage}
+                </p>
+              ) : null}
             </form>
           </div>
         </div>

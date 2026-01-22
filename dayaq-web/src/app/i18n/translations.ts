@@ -114,6 +114,7 @@ type LoginTranslations = {
     submitting: string
     disclaimer: string
     success: string
+    error: string
     emailError: string
     passwordError: string
   }
@@ -140,6 +141,7 @@ type AdminLoginTranslations = {
     usernamePlaceholder: string
     passwordPlaceholder: string
     submit: string
+    error: string
   }
   backHome: string
 }
@@ -148,6 +150,25 @@ type AdminPanelTranslations = {
   heading: string
   lede: string
   signOut: string
+}
+
+type RegistrationTranslations = {
+  heading: string
+  lede: string
+  form: {
+    name: string
+    surname: string
+    fatherName: string
+    birthDate: string
+    email: string
+    phoneNumber: string
+    password: string
+    submit: string
+    submitting: string
+    success: string
+    error: string
+  }
+  backHome: string
 }
 
 type CommonTranslations = {
@@ -161,6 +182,7 @@ export type AppTranslations = {
   userCategorySelection: UserCategorySelectionTranslations
   adminLogin: AdminLoginTranslations
   adminPanel: AdminPanelTranslations
+  registration: RegistrationTranslations
 }
 
 export const translations: Record<Locale, AppTranslations> = {
@@ -201,7 +223,7 @@ export const translations: Record<Locale, AppTranslations> = {
           seededPhoneNumber: '+1 (555) 123-4567',
           seededEmail: 'alex.doe@example.com',
           seededFinCode: 'A1B2C3',
-          submit: 'Qeydiyyatdan keç',
+          submit: 'Register',
           disclaimer: 'No commitment. We won’t save these details.',
         },
       },
@@ -372,6 +394,7 @@ export const translations: Record<Locale, AppTranslations> = {
         usernamePlaceholder: 'Enter admin username',
         passwordPlaceholder: 'Enter admin password',
         submit: 'Sign in',
+        error: 'We could not sign you in. Please check your details and try again.',
       },
       backHome: 'Back to home',
     },
@@ -379,6 +402,24 @@ export const translations: Record<Locale, AppTranslations> = {
       heading: 'Admin panel',
       lede: 'You are signed in with administrative access.',
       signOut: 'Sign out',
+    },
+    registration: {
+      heading: 'Create your account',
+      lede: 'Share a few details to get started.',
+      form: {
+        name: 'First name',
+        surname: 'Last name',
+        fatherName: 'Father name',
+        birthDate: 'Birth date',
+        email: 'Email',
+        phoneNumber: 'Phone number',
+        password: 'Password',
+        submit: 'Create account',
+        submitting: 'Submitting...',
+        success: 'Registration submitted. We will be in touch shortly.',
+        error: 'We could not complete registration. Please try again.',
+      },
+      backHome: 'Back to home',
     },
   },
   az: {
@@ -580,6 +621,7 @@ export const translations: Record<Locale, AppTranslations> = {
           'Kimlik məlumatlarınız təhlükəsiz yoxlanacaq. Bu təcrübədə məlumat saxlanmır.',
         success:
           'Giriş auth xidmətinə qoşulmağa hazırdır. Backend hazır olduqdan sonra yönləndiriləcəksiniz.',
+        error: 'Giriş alınmadı. Məlumatlarınızı yoxlayıb yenidən cəhd edin.',
         emailError: 'Etibarlı email daxil edin',
         passwordError: 'Şifrə ən az 8 simvol olmalıdır',
       },
@@ -603,6 +645,7 @@ export const translations: Record<Locale, AppTranslations> = {
         usernamePlaceholder: 'Admin istifadəçi adını daxil edin',
         passwordPlaceholder: 'Admin şifrəsini daxil edin',
         submit: 'Daxil ol',
+        error: 'Giriş alınmadı. Məlumatlarınızı yoxlayıb yenidən cəhd edin.',
       },
       backHome: 'Ana səhifəyə qayıt',
     },
@@ -610,6 +653,24 @@ export const translations: Record<Locale, AppTranslations> = {
       heading: 'Admin paneli',
       lede: 'Siz admin səlahiyyətləri ilə daxil oldunuz.',
       signOut: 'Çıxış et',
+    },
+    registration: {
+      heading: 'Hesab yaradın',
+      lede: 'Başlamaq üçün bir neçə məlumat paylaşın.',
+      form: {
+        name: 'Ad',
+        surname: 'Soyad',
+        fatherName: 'Ata adı',
+        birthDate: 'Doğum tarixi',
+        email: 'Email',
+        phoneNumber: 'Telefon nömrəsi',
+        password: 'Şifrə',
+        submit: 'Hesab yarat',
+        submitting: 'Göndərilir...',
+        success: 'Qeydiyyat göndərildi. Tezliklə sizinlə əlaqə saxlayacağıq.',
+        error: 'Qeydiyyat tamamlanmadı. Yenidən cəhd edin.',
+      },
+      backHome: 'Ana səhifəyə qayıt',
     },
   },
   tr: {
@@ -812,6 +873,7 @@ export const translations: Record<Locale, AppTranslations> = {
           'Kimlik bilgilerinizi güvenle doğruluyoruz. Bu demo akışında bilgi saklamıyoruz.',
         success:
           'Giriş, kimlik doğrulama hizmetine bağlanmaya hazır. Backend hazır olduğunda yönlendirileceksiniz.',
+        error: 'Giriş yapılamadı. Bilgilerinizi kontrol edip tekrar deneyin.',
         emailError: 'Geçerli bir e-posta girin',
         passwordError: 'Şifre en az 8 karakter olmalıdır',
       },
@@ -835,6 +897,7 @@ export const translations: Record<Locale, AppTranslations> = {
         usernamePlaceholder: 'Yönetici kullanıcı adını girin',
         passwordPlaceholder: 'Yönetici şifresini girin',
         submit: 'Giriş yap',
+        error: 'Giriş yapılamadı. Bilgilerinizi kontrol edip tekrar deneyin.',
       },
       backHome: 'Ana sayfaya dön',
     },
@@ -842,6 +905,24 @@ export const translations: Record<Locale, AppTranslations> = {
       heading: 'Yönetici paneli',
       lede: 'Yönetici erişimiyle giriş yaptınız.',
       signOut: 'Çıkış yap',
+    },
+    registration: {
+      heading: 'Hesap oluşturun',
+      lede: 'Başlamak için birkaç bilgi paylaşın.',
+      form: {
+        name: 'Ad',
+        surname: 'Soyad',
+        fatherName: 'Baba adı',
+        birthDate: 'Doğum tarihi',
+        email: 'E-posta',
+        phoneNumber: 'Telefon numarası',
+        password: 'Şifre',
+        submit: 'Hesap oluştur',
+        submitting: 'Gönderiliyor...',
+        success: 'Kayıt gönderildi. Yakında sizinle iletişime geçeceğiz.',
+        error: 'Kayıt tamamlanamadı. Lütfen tekrar deneyin.',
+      },
+      backHome: 'Ana sayfaya dön',
     },
   },
   ru: {
@@ -1045,6 +1126,7 @@ export const translations: Record<Locale, AppTranslations> = {
           'Мы безопасно проверим ваши данные. В этом демо ничего не сохраняется.',
         success:
           'Вход готов подключиться к службе аутентификации. Когда backend будет готов, мы перенаправим вас.',
+        error: 'Не удалось войти. Проверьте данные и попробуйте снова.',
         emailError: 'Введите корректный e-mail',
         passwordError: 'Пароль должен содержать минимум 8 символов',
       },
@@ -1068,6 +1150,7 @@ export const translations: Record<Locale, AppTranslations> = {
         usernamePlaceholder: 'Введите имя администратора',
         passwordPlaceholder: 'Введите пароль администратора',
         submit: 'Войти',
+        error: 'Не удалось войти. Проверьте данные и попробуйте снова.',
       },
       backHome: 'На главную',
     },
@@ -1075,6 +1158,24 @@ export const translations: Record<Locale, AppTranslations> = {
       heading: 'Админ-панель',
       lede: 'Вы вошли с административным доступом.',
       signOut: 'Выйти',
+    },
+    registration: {
+      heading: 'Создайте аккаунт',
+      lede: 'Укажите несколько данных, чтобы начать.',
+      form: {
+        name: 'Имя',
+        surname: 'Фамилия',
+        fatherName: 'Отчество',
+        birthDate: 'Дата рождения',
+        email: 'Email',
+        phoneNumber: 'Телефон',
+        password: 'Пароль',
+        submit: 'Создать аккаунт',
+        submitting: 'Отправка...',
+        success: 'Регистрация отправлена. Мы скоро свяжемся с вами.',
+        error: 'Не удалось завершить регистрацию. Попробуйте еще раз.',
+      },
+      backHome: 'На главную',
     },
   },
 }

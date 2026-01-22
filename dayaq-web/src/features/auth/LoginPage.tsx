@@ -4,8 +4,13 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 
+import { useAuth } from '@app/auth/AuthProvider'
 import { useI18n } from '@app/i18n/I18nProvider'
 import { routes } from '@app/routes'
+import { login } from '@services/api/authApi'
+import { ApiError } from '@services/api/httpClient'
+import { getResultErrorMessage } from '@utils/apiErrors'
+import { getDeviceInfo } from '@utils/deviceInfo'
 import './LoginPage.css'
 
 type LoginFormValues = {
@@ -16,6 +21,7 @@ type LoginFormValues = {
 
 function LoginPage() {
   const navigate = useNavigate()
+  const { login: setSession } = useAuth()
   const { t } = useI18n()
   const copy = t.login
   const common = t.common
@@ -25,7 +31,8 @@ function LoginPage() {
     rememberMe: z.boolean(),
   })
 
-  const [status, setStatus] = useState<'idle' | 'success'>('idle')
+  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [isVisible, setIsVisible] = useState(false)
   const [isExiting, setIsExiting] = useState(false)
 
@@ -43,15 +50,33 @@ function LoginPage() {
     },
   })
 
-  const onSubmit = handleSubmit(async () => {
+  const onSubmit = handleSubmit(async (values) => {
     setStatus('idle')
-    await new Promise((resolve) => setTimeout(resolve, 250))
-    setStatus('success')
-    reset({
-      email: '',
-      password: '',
-      rememberMe: false,
-    })
+    setErrorMessage(null)
+    try {
+      const response = await login({
+        Username: values.email,
+        Password: values.password,
+        DeviceInfo: getDeviceInfo(),
+      })
+      setSession({ token: response.accessToken, role: 'client' })
+      setStatus('success')
+      reset({
+        email: '',
+        password: '',
+        rememberMe: false,
+      })
+    } catch (error) {
+      setStatus('error')
+      if (error instanceof ApiError) {
+        const apiMessage = getResultErrorMessage(error.data)
+        if (apiMessage) {
+          setErrorMessage(apiMessage)
+          return
+        }
+      }
+      setErrorMessage('Unable to sign in. Please try again.')
+    }
   })
 
   useEffect(() => {
@@ -153,6 +178,11 @@ function LoginPage() {
               {status === 'success' ? (
                 <p className="form-status" role="status" aria-live="polite">
                   {copy.form.success}
+                </p>
+              ) : null}
+              {status === 'error' ? (
+                <p className="form-status form-status--error" role="alert">
+                  {errorMessage}
                 </p>
               ) : null}
             </form>

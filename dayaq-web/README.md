@@ -71,3 +71,9 @@ export default defineConfig([
   },
 ])
 ```
+
+## Project Ruleset (Mocking)
+
+- Use Mock Service Worker (MSW) for all API mocks.
+- Every new API endpoint must have a corresponding MSW handler.
+- Keep handlers in `src/mocks/handlers/<feature>.ts` and enable mocks only in development.

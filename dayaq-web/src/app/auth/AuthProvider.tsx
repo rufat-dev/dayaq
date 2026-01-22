@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useContext, useMemo, useState } from 'react'
 
 import { setAuthToken } from '@services/api/tokenStore'
-import type { AuthSession, UserRole } from '@types/auth'
+import type { AuthSession, UserRole } from '../../types/auth'
 
 type AuthContextValue = {
   token: string | null

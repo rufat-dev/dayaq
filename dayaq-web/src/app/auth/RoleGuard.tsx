@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom'
 
 import { routes } from '@app/routes'
 import { useAuth } from './AuthProvider'
-import type { UserRole } from '@types/auth'
+import type { UserRole } from '../../types/auth'
 
 type Props = {
   children: ReactNode

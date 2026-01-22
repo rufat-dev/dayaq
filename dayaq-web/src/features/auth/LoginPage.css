@@ -10,6 +10,10 @@
   font-size: 0.95rem;
 }
 
+.form-status--error {
+  color: #b42318;
+}
+
 .login-page main {
   display: flex;
   justify-content: center;

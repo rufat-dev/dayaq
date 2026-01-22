@@ -8,6 +8,26 @@ type ApiRequestOptions = RequestInit & {
   auth?: boolean
 }
 
+export class ApiError extends Error {
+  status: number
+  data: unknown
+
+  constructor(message: string, status: number, data: unknown) {
+    super(message)
+    this.name = 'ApiError'
+    this.status = status
+    this.data = data
+  }
+}
+
+const parseErrorBody = async (response: Response) => {
+  const contentType = response.headers.get('Content-Type') ?? ''
+  if (contentType.includes('application/json')) {
+    return (await response.json()) as unknown
+  }
+  return await response.text()
+}
+
 export async function apiFetch<TResponse>(
   path: string,
   options: ApiRequestOptions = {},
@@ -35,8 +55,12 @@ export async function apiFetch<TResponse>(
   })
 
   if (!response.ok) {
-    const message = await response.text()
-    throw new Error(message || `Request failed with status ${response.status}`)
+    const data = await parseErrorBody(response)
+    const message =
+      typeof data === 'string' && data.length > 0
+        ? data
+        : `Request failed with status ${response.status}`
+    throw new ApiError(message, response.status, data)
   }
 
   if (response.status === 204) {
