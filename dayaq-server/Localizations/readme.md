@@ -68,8 +68,20 @@ Return validation errors like:
 | ERR00035 | Username is required.|
 | ERR00036 | Username must not exceed 300 characters.|
 | ERR00037 | Device information is required.|
-| ERR00038 ||
-| ERR00039 ||
-|||
-|||
+| ERR00038 | Refresh token is required. |
+| ERR00039 | Refresh token must not exceed 512 characters. |
+| ERR00040 | Name is required. | Classifier name must not be empty. |
+| ERR00041 | Name must not exceed 150 characters. | Classifier name length must be **<= 150**. |
+| ERR00042 | Name contains invalid characters. | Classifier name can contain letters, digits, spaces, and `-`, `_`, `.`. |
+| ERR00043 | Description is required. | Classifier description must not be empty. |
+| ERR00044 | Description must not exceed 500 characters. | Classifier description length must be **<= 500**. |
+| ERR00045 | Description contains invalid characters. | Classifier description can contain letters, digits, spaces, and `-`, `_`, `.`, `,`, `:`, `;`, `(`, `)`, `/`, `&`, `+`, `'`. |
+| ERR00046 | Coefficient must be greater than 0. | Currency coefficient must be positive. |
+| ERR00047 | Coefficient must not exceed 999999.99. | Currency coefficient must not exceed **999999.99**. |
+| ERR00048 | Period time must be between 1 and 255 minutes. | Period time must be between **1** and **255** minutes. |
+| ERR00050 | Classifier item not found. | The classifier record does not exist. |
+| ERR00051 | Classifier name already exists. | Duplicate classifier name conflict. |
+| ERR00052 | Refresh token must not contain whitespace. |
+| ERR00053 | Refresh token format is invalid. |
+| ERR00054 | Refresh token is invalid or expired. |
 | ERR00100 | Unexpected error contact with admin | |

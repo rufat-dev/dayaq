@@ -8,6 +8,7 @@
         protected readonly IUnitOfSecurity UnitOfSecurity;
         protected readonly IHashService HashService;
         protected readonly IValidator<TraditionalUserLoginDto> TraditionalUserLoginValidator;
+        protected readonly IValidator<RefreshTokenRequestDto> RefreshTokenRequestValidator;
         protected readonly ITokenService TokenService;
         protected readonly IPrivateClientInfoService PrivateClientInfoService;
         public LoginService(ILogger<LoginService> logger, 
@@ -15,6 +16,7 @@
             IUnitOfService unitOfService,
             IHashService hashService,
             IValidator<TraditionalUserLoginDto> traditionalUserLoginValidator,
+            IValidator<RefreshTokenRequestDto> refreshTokenRequestValidator,
             ITokenService tokenService,
             IPrivateClientInfoService privateClientInfoService, 
             IUnitOfSecurity unitOfSecurity)
@@ -25,6 +27,7 @@
             UnitOfSecurity = unitOfSecurity;
             HashService = hashService;
             TraditionalUserLoginValidator = traditionalUserLoginValidator;
+            RefreshTokenRequestValidator = refreshTokenRequestValidator;
             TokenService = tokenService;
             PrivateClientInfoService = privateClientInfoService;
         }
@@ -73,10 +76,11 @@
             var userTypes = await PrivateClientInfoService.GetUserTypesAsync(person.User.Id);
             var claims = new Dictionary<string, object>();
             Logger.LogInformation("Retrieve user types");
-            claims.Add(ClaimTypes.Role, userTypes);
+            var roleNames = userTypes.Select(userType => userType.ToString()).ToArray();
+            claims.Add(ClaimTypes.Role, roleNames);
             Logger.LogTrace("All claims generated");
 
-            var accessToken = TokenService.GetToken(claims);
+            var accessToken = TokenService.GetToken(out var expiredDate, claims);
             var refreshToken = TokenService.GenerateRefreshToken();
             Logger.LogInformation("Tokens generated");
             var newSession = new SessionEntity
@@ -97,6 +101,8 @@
                     {
                         AccessToken = accessToken,
                         RefreshToken = refreshToken,
+                        IsExpired = false,
+                        ExpiredDate = expiredDate,
                     } 
                 }
             };
@@ -106,6 +112,62 @@
 
             result.Success(new TokenDto(accessToken, refreshToken));
             Logger.LogTrace("Finished Traditional login!");
+            return result;
+        }
+
+        public async Task<Result<TokenDto>> RefreshTokenAsync(RefreshTokenRequestDto refreshTokenRequest)
+        {
+            var result = Result<TokenDto>.Create();
+            Logger.LogTrace("Started refresh token workflow");
+
+            var refreshTokenValidatorResult = await RefreshTokenRequestValidator.ValidateAsync(refreshTokenRequest);
+            if (refreshTokenValidatorResult == null)
+            {
+                Logger.LogError("Validation result returned error");
+                result.AddMessage("ERR00100", "Unexpected error contact with admin", HttpStatusCode.BadRequest);
+                return result;
+            }
+            else if (!refreshTokenValidatorResult.IsValid)
+            {
+                Logger.LogDebug("Validation result is invalid for refresh token");
+                result.SetFluentValidationAndBadRequest(refreshTokenValidatorResult);
+                return result;
+            }
+
+            var oldTokenEntity = await UnitOfSecurity.Token.FindFirstAsync(token => token.RefreshToken == refreshTokenRequest.RefreshToken, true);
+            if (oldTokenEntity?.Session == null || oldTokenEntity.IsExpired)
+            {
+                Logger.LogInformation("Refresh token not found or session is invalid");
+                result.AddMessage("ERR00054", "Refresh token is invalid or expired.", HttpStatusCode.Unauthorized);
+                return result;
+            }
+
+            var userTypes = await PrivateClientInfoService.GetUserTypesAsync(oldTokenEntity.Session.UserId);
+            var claims = new Dictionary<string, object>();
+            Logger.LogInformation("Retrieve user types");
+            var roleNames = userTypes.Select(userType => userType.ToString()).ToArray();
+            claims.Add(ClaimTypes.Role, roleNames);
+            Logger.LogTrace("All claims generated");
+
+            var accessToken = TokenService.GetToken(out var expiredDate, claims);
+            var refreshToken = TokenService.GenerateRefreshToken();
+            Logger.LogInformation("New tokens generated");
+            oldTokenEntity.IsExpired = true;
+            var newTokenEntity = new TokenEntity
+            {
+                SessionId = oldTokenEntity.SessionId,
+                AccessToken = accessToken,
+                RefreshToken = refreshToken,
+                ExpiredDate = expiredDate,
+                IsExpired = false
+            };
+            UnitOfSecurity.Token.Update(oldTokenEntity);
+            UnitOfSecurity.Token.Add(newTokenEntity);
+            await UnitOfSecurity.SaveChangesAsync();
+            Logger.LogDebug("New token linked with session");
+
+            result.Success(new TokenDto(accessToken, refreshToken));
+            Logger.LogTrace("Finished refresh token workflow");
             return result;
         }
     }
