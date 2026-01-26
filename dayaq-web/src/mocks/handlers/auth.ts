@@ -62,7 +62,13 @@ export const authHandlers = [
       )
     }
 
-    return HttpResponse.json({ accessToken: 'mock-access-token' })
+    return HttpResponse.json({ accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiY2xpZW50In0.signature' })
+  }),
+  http.post('/api/Login/refresh', async () => {
+    await randomDelay()
+    return HttpResponse.json({
+      accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4ifQ.signature',
+    })
   }),
   http.post('/api/Registration', async ({ request }) => {
     await randomDelay()

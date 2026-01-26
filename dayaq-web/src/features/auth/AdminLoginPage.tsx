@@ -9,6 +9,7 @@ import { login as loginRequest } from '@services/api/authApi'
 import { ApiError } from '@services/api/httpClient'
 import { getResultErrorMessage } from '@utils/apiErrors'
 import { getDeviceInfo } from '@utils/deviceInfo'
+import { getRoleFromToken } from '@utils/jwt'
 import './AdminLoginPage.css'
 
 function AdminLoginPage() {
@@ -66,7 +67,8 @@ function AdminLoginPage() {
         Password: password,
         DeviceInfo: getDeviceInfo(),
       })
-      setSession({ token: response.accessToken, role: 'admin' })
+      const role = getRoleFromToken(response.accessToken)
+      setSession({ token: response.accessToken, role: role ?? 'admin' })
       navigate(routes.adminPanel)
     } catch (error) {
       setStatus('error')

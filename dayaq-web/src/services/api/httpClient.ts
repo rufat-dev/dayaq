@@ -1,4 +1,4 @@
-import { getAuthToken } from './tokenStore'
+import { getAuthToken, setAuthToken } from './tokenStore'
 
 const DEFAULT_HEADERS = {
   Accept: 'application/json',
@@ -20,12 +20,37 @@ export class ApiError extends Error {
   }
 }
 
+const REFRESH_PATH = '/api/Login/refresh'
+
 const parseErrorBody = async (response: Response) => {
   const contentType = response.headers.get('Content-Type') ?? ''
   if (contentType.includes('application/json')) {
     return (await response.json()) as unknown
   }
   return await response.text()
+}
+
+const refreshAccessToken = async () => {
+  const response = await fetch(REFRESH_PATH, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      Accept: DEFAULT_HEADERS.Accept,
+    },
+  })
+
+  if (!response.ok) {
+    return null
+  }
+
+  const data = (await response.json()) as { accessToken?: string; AccessToken?: string }
+  const token = data.accessToken ?? data.AccessToken
+  if (!token) {
+    return null
+  }
+
+  setAuthToken(token)
+  return token
 }
 
 export async function apiFetch<TResponse>(
@@ -55,6 +80,19 @@ export async function apiFetch<TResponse>(
   })
 
   if (!response.ok) {
+    if (response.status === 401 ) {
+      const data = await parseErrorBody(response)
+      const refreshed = await refreshAccessToken()
+      if (refreshed) {
+        return apiFetch<TResponse>(path, options)
+      }
+      const message =
+        typeof data === 'string' && data.length > 0
+          ? data
+          : `Request failed with status ${response.status}`
+      throw new ApiError(message, response.status, data)
+    }
+
     const data = await parseErrorBody(response)
     const message =
       typeof data === 'string' && data.length > 0

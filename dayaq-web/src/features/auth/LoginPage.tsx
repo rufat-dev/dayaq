@@ -11,6 +11,7 @@ import { login } from '@services/api/authApi'
 import { ApiError } from '@services/api/httpClient'
 import { getResultErrorMessage } from '@utils/apiErrors'
 import { getDeviceInfo } from '@utils/deviceInfo'
+import { getRoleFromToken } from '@utils/jwt'
 import './LoginPage.css'
 
 type LoginFormValues = {
@@ -59,7 +60,8 @@ function LoginPage() {
         Password: values.password,
         DeviceInfo: getDeviceInfo(),
       })
-      setSession({ token: response.accessToken, role: 'client' })
+      const role = getRoleFromToken(response.accessToken)
+      setSession({ token: response.accessToken, role: role ?? 'client' })
       setStatus('success')
       reset({
         email: '',

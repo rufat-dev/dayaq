@@ -1,9 +1,9 @@
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 
 import { useAuth } from './AuthProvider'
 import { routes } from '@app/routes'
-import type { UserRole } from '@types/auth'
+import type { UserRole } from '../../types/auth'
 
 type Props = {
   children: ReactNode

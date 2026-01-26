@@ -1,6 +1,7 @@
 import '@styles/App.css'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { useEffect } from 'react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import { AuthProvider } from './auth/AuthProvider'
 import { ProtectedRoute } from './auth/ProtectedRoute'
@@ -15,6 +16,8 @@ import AdminLoginPage from '@features/auth/AdminLoginPage'
 import AdminPanelPage from '@features/admin/AdminPanelPage'
 import ForbiddenPage from '@features/auth/ForbiddenPage'
 
+const queryClient = new QueryClient()
+
 function App() {
   useEffect(() => {
     const root = document.documentElement
@@ -25,29 +28,31 @@ function App() {
 
   return (
     <I18nProvider>
-      <AuthProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path={routes.home} element={<LandingPage />} />
-            <Route path={routes.login} element={<LoginPage />} />
-            <Route path={routes.adminLogin} element={<AdminLoginPage />} />
-            <Route path={routes.forbidden} element={<ForbiddenPage />} />
-            <Route path={routes.userCategorySelection} element={<UserCategorySelectionPage />} />
-            <Route path={routes.register} element={<RegistrationPage />} />
-            <Route
-              path={routes.adminPanel}
-              element={
-                <ProtectedRoute requiredRoles={['admin']}>
-                  <RoleGuard allowedRoles={['admin']}>
-                    <AdminPanelPage />
-                  </RoleGuard>
-                </ProtectedRoute>
-              }
-            />
-            <Route path="*" element={<Navigate to={routes.home} replace />} />
-          </Routes>
-        </BrowserRouter>
-      </AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path={routes.home} element={<LandingPage />} />
+              <Route path={routes.login} element={<LoginPage />} />
+              <Route path={routes.adminLogin} element={<AdminLoginPage />} />
+              <Route path={routes.forbidden} element={<ForbiddenPage />} />
+              <Route path={routes.userCategorySelection} element={<UserCategorySelectionPage />} />
+              <Route path={routes.register} element={<RegistrationPage />} />
+              <Route
+                path={routes.adminPanel}
+                element={
+                  <ProtectedRoute requiredRoles={['admin']}>
+                    <RoleGuard allowedRoles={['admin']}>
+                      <AdminPanelPage />
+                    </RoleGuard>
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="*" element={<Navigate to={routes.home} replace />} />
+            </Routes>
+          </BrowserRouter>
+        </AuthProvider>
+      </QueryClientProvider>
     </I18nProvider>
   )
 }
