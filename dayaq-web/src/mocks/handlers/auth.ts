@@ -62,7 +62,20 @@ export const authHandlers = [
       )
     }
 
-    return HttpResponse.json({ accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiY2xpZW50In0.signature' })
+    if (body.Username === 'admin@email.com' && body.Password === 'adminpassword') {
+      return HttpResponse.json(
+        { accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4ifQ.signature' },
+        {
+          headers: {
+            'Set-Cookie': 'RefreshToken=mock-refresh-9f7c2a; Path=/; HttpOnly; SameSite=Lax',
+          },
+        },
+      )
+    }
+
+    return HttpResponse.json(
+      { accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiY2xpZW50In0.signature' },
+    )
   }),
   http.post('/api/Login/refresh', async () => {
     await randomDelay()

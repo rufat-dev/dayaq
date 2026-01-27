@@ -41,7 +41,7 @@ function App() {
               <Route
                 path={routes.adminPanel}
                 element={
-                  <ProtectedRoute requiredRoles={['admin']}>
+                  <ProtectedRoute requiredRoles={['admin']} redirectTo={routes.adminLogin}>
                     <RoleGuard allowedRoles={['admin']}>
                       <AdminPanelPage />
                     </RoleGuard>

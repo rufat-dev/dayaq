@@ -32,13 +32,20 @@ function AdminLoginPage() {
   }, [])
 
   useEffect(() => {
-    if (isAuthenticated && role === 'admin') {
-      const nextPath =
-        typeof location.state === 'object' && location.state && 'from' in location.state
-          ? String(location.state.from)
-          : routes.adminPanel
-      navigate(nextPath, { replace: true })
+    if (!isAuthenticated || role !== 'admin') {
+      return
     }
+
+    const nextPath =
+      typeof location.state === 'object' && location.state && 'from' in location.state
+        ? String(location.state.from)
+        : null
+
+    if (!nextPath) {
+      return
+    }
+
+    navigate(nextPath, { replace: true })
   }, [isAuthenticated, location.state, navigate, role])
 
   const handleBackHome = () => {
@@ -68,7 +75,11 @@ function AdminLoginPage() {
         DeviceInfo: getDeviceInfo(),
       })
       const role = getRoleFromToken(response.accessToken)
-      setSession({ token: response.accessToken, role: role ?? 'admin' })
+      if(role !== 'admin') {
+        setErrorMessage('You are not authorized to access this page.')
+        return
+      }
+      setSession({ token: response.accessToken, role: role })
       navigate(routes.adminPanel)
     } catch (error) {
       setStatus('error')
