@@ -150,6 +150,56 @@ type AdminPanelTranslations = {
   heading: string
   lede: string
   signOut: string
+  nav: {
+    categories: string
+    users: string
+    tags: string
+    settings: string
+  }
+  categories: {
+    heading: string
+    addNew: string
+    searchPlaceholder: string
+    loading: string
+    error: string
+    empty: string
+    table: {
+      id: string
+      name: string
+      type: string
+      active: string
+      actions: string
+    }
+    actions: {
+      edit: string
+      delete: string
+    }
+  }
+  modal: {
+    addTitle: string
+    editTitle: string
+    fields: {
+      name: string
+      description: string
+      type: string
+      coefficient: string
+      periodTime: string
+      active: string
+    }
+    options: {
+      currency: string
+      paymentType: string
+      period: string
+      specialty: string
+    }
+    buttons: {
+      save: string
+      cancel: string
+    }
+  }
+  errors: {
+    generic: string
+  }
 }
 
 type RegistrationTranslations = {
@@ -423,6 +473,56 @@ export const translations: Record<Locale, AppTranslations> = {
       heading: 'Admin panel',
       lede: 'You are signed in with administrative access.',
       signOut: 'Sign out',
+      nav: {
+        categories: 'Categories',
+        users: 'Users',
+        tags: 'Tags',
+        settings: 'Settings',
+      },
+      categories: {
+        heading: 'Categories',
+        addNew: 'Add new category',
+        searchPlaceholder: 'Search...',
+        loading: 'Loading categories...',
+        error: 'Unable to load categories. Please try again.',
+        empty: 'No categories found.',
+        table: {
+          id: 'ID',
+          name: 'Name',
+          type: 'Type',
+          active: 'Active',
+          actions: 'Actions',
+        },
+        actions: {
+          edit: 'Edit',
+          delete: 'Delete',
+        },
+      },
+      modal: {
+        addTitle: 'Add category',
+        editTitle: 'Edit category',
+        fields: {
+          name: 'Name',
+          description: 'Description',
+          type: 'Type',
+          coefficient: 'Coefficient',
+          periodTime: 'Period time',
+          active: 'Active',
+        },
+        options: {
+          currency: 'Currency',
+          paymentType: 'Payment type',
+          period: 'Period',
+          specialty: 'Specialty',
+        },
+        buttons: {
+          save: 'Save',
+          cancel: 'Cancel',
+        },
+      },
+      errors: {
+        generic: 'Something went wrong. Please try again.',
+      },
     },
     registration: {
       heading: 'Create your account',
@@ -693,6 +793,56 @@ export const translations: Record<Locale, AppTranslations> = {
       heading: 'Admin paneli',
       lede: 'Siz admin səlahiyyətləri ilə daxil oldunuz.',
       signOut: 'Çıxış et',
+      nav: {
+        categories: 'Kateqoriyalar',
+        users: 'İstifadəçilər',
+        tags: 'Teqlər',
+        settings: 'Ayarlar',
+      },
+      categories: {
+        heading: 'Kateqoriyalar',
+        addNew: 'Yeni kateqoriya əlavə et',
+        searchPlaceholder: 'Axtarış...',
+        loading: 'Kateqoriyalar yüklənir...',
+        error: 'Kateqoriyalar yüklənə bilmədi. Yenidən cəhd edin.',
+        empty: 'Kateqoriya tapılmadı.',
+        table: {
+          id: 'ID',
+          name: 'Ad',
+          type: 'Növ',
+          active: 'Aktiv',
+          actions: 'Əməliyyatlar',
+        },
+        actions: {
+          edit: 'Redaktə et',
+          delete: 'Sil',
+        },
+      },
+      modal: {
+        addTitle: 'Kateqoriya əlavə et',
+        editTitle: 'Kateqoriyanı redaktə et',
+        fields: {
+          name: 'Ad',
+          description: 'Təsvir',
+          type: 'Növ',
+          coefficient: 'Əmsal',
+          periodTime: 'Period vaxtı',
+          active: 'Aktiv',
+        },
+        options: {
+          currency: 'Valyuta',
+          paymentType: 'Ödəniş növü',
+          period: 'Period',
+          specialty: 'İxtisas',
+        },
+        buttons: {
+          save: 'Yadda saxla',
+          cancel: 'Ləğv et',
+        },
+      },
+      errors: {
+        generic: 'Xəta baş verdi. Yenidən cəhd edin.',
+      },
     },
     registration: {
       heading: 'Hesab yaradın',
@@ -964,6 +1114,56 @@ export const translations: Record<Locale, AppTranslations> = {
       heading: 'Yönetici paneli',
       lede: 'Yönetici erişimiyle giriş yaptınız.',
       signOut: 'Çıkış yap',
+      nav: {
+        categories: 'Kategoriler',
+        users: 'Kullanıcılar',
+        tags: 'Etiketler',
+        settings: 'Ayarlar',
+      },
+      categories: {
+        heading: 'Kategoriler',
+        addNew: 'Yeni kategori ekle',
+        searchPlaceholder: 'Ara...',
+        loading: 'Kategoriler yükleniyor...',
+        error: 'Kategoriler yüklenemedi. Lütfen tekrar deneyin.',
+        empty: 'Kategori bulunamadı.',
+        table: {
+          id: 'ID',
+          name: 'Ad',
+          type: 'Tür',
+          active: 'Aktif',
+          actions: 'İşlemler',
+        },
+        actions: {
+          edit: 'Düzenle',
+          delete: 'Sil',
+        },
+      },
+      modal: {
+        addTitle: 'Kategori ekle',
+        editTitle: 'Kategori düzenle',
+        fields: {
+          name: 'Ad',
+          description: 'Açıklama',
+          type: 'Tür',
+          coefficient: 'Katsayı',
+          periodTime: 'Periyot süresi',
+          active: 'Aktif',
+        },
+        options: {
+          currency: 'Para birimi',
+          paymentType: 'Ödeme türü',
+          period: 'Periyot',
+          specialty: 'Uzmanlık',
+        },
+        buttons: {
+          save: 'Kaydet',
+          cancel: 'İptal',
+        },
+      },
+      errors: {
+        generic: 'Bir şeyler ters gitti. Lütfen tekrar deneyin.',
+      },
     },
     registration: {
       heading: 'Hesap oluşturun',
@@ -1237,6 +1437,56 @@ export const translations: Record<Locale, AppTranslations> = {
       heading: 'Админ-панель',
       lede: 'Вы вошли с административным доступом.',
       signOut: 'Выйти',
+      nav: {
+        categories: 'Категории',
+        users: 'Пользователи',
+        tags: 'Теги',
+        settings: 'Настройки',
+      },
+      categories: {
+        heading: 'Категории',
+        addNew: 'Добавить категорию',
+        searchPlaceholder: 'Поиск...',
+        loading: 'Загрузка категорий...',
+        error: 'Не удалось загрузить категории. Попробуйте снова.',
+        empty: 'Категории не найдены.',
+        table: {
+          id: 'ID',
+          name: 'Название',
+          type: 'Тип',
+          active: 'Активно',
+          actions: 'Действия',
+        },
+        actions: {
+          edit: 'Редактировать',
+          delete: 'Удалить',
+        },
+      },
+      modal: {
+        addTitle: 'Добавить категорию',
+        editTitle: 'Редактировать категорию',
+        fields: {
+          name: 'Название',
+          description: 'Описание',
+          type: 'Тип',
+          coefficient: 'Коэффициент',
+          periodTime: 'Длительность периода',
+          active: 'Активно',
+        },
+        options: {
+          currency: 'Валюта',
+          paymentType: 'Тип оплаты',
+          period: 'Период',
+          specialty: 'Специализация',
+        },
+        buttons: {
+          save: 'Сохранить',
+          cancel: 'Отмена',
+        },
+      },
+      errors: {
+        generic: 'Что-то пошло не так. Попробуйте снова.',
+      },
     },
     registration: {
       heading: 'Создайте аккаунт',

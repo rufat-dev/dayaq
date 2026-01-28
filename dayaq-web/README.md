@@ -77,3 +77,8 @@ export default defineConfig([
 - Use Mock Service Worker (MSW) for all API mocks.
 - Every new API endpoint must have a corresponding MSW handler.
 - Keep handlers in `src/mocks/handlers/<feature>.ts` and enable mocks only in development.
+
+## Project Ruleset (Localization)
+
+- All user-facing strings must come from the i18n translations.
+- Do not hardcode copy inside components (use `useI18n()` and `t.<section>`).

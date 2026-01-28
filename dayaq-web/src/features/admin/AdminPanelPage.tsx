@@ -153,7 +153,7 @@ function AdminPanelPage() {
         return
       }
     }
-    setErrorMessage('Something went wrong. Please try again.')
+    setErrorMessage(copy.errors.generic)
   }
 
   useEffect(() => {
@@ -186,28 +186,28 @@ function AdminPanelPage() {
     const specialties = (specialtiesQuery.data?.Model ?? []) as SpecialtyDto[]
 
     const mapped: AdminCategoryRow[] = [
-      ...currencies.map((item) => ({
+      ...currencies.map<AdminCategoryRow>((item) => ({
         id: item.Id,
         name: item.Name,
         type: 'Currency',
         active: true,
         kind: 'currency',
       })),
-      ...paymentTypes.map((item) => ({
+      ...paymentTypes.map<AdminCategoryRow>((item) => ({
         id: item.Id,
         name: item.Name,
         type: 'Payment type',
         active: true,
         kind: 'paymentType',
       })),
-      ...periods.map((item) => ({
+      ...periods.map<AdminCategoryRow>((item) => ({
         id: item.Id,
         name: item.Name,
         type: 'Period',
         active: true,
         kind: 'period',
       })),
-      ...specialties.map((item) => ({
+      ...specialties.map<AdminCategoryRow>((item) => ({
         id: item.Id,
         name: item.Name,
         type: 'Specialty',
@@ -215,6 +215,7 @@ function AdminPanelPage() {
         kind: 'specialty',
       })),
     ]
+    
 
     const term = searchTerm.trim().toLowerCase()
     if (!term) return mapped
@@ -313,65 +314,65 @@ function AdminPanelPage() {
             className={`admin-panel-nav ${activeSection === 'categories' ? 'admin-panel-nav--active' : ''}`}
             onClick={() => setActiveSection('categories')}
           >
-            Categories
+            {copy.nav.categories}
           </button>
           <button
             type="button"
             className={`admin-panel-nav ${activeSection === 'users' ? 'admin-panel-nav--active' : ''}`}
             onClick={() => setActiveSection('users')}
           >
-            Users
+            {copy.nav.users}
           </button>
           <button
             type="button"
             className={`admin-panel-nav ${activeSection === 'tags' ? 'admin-panel-nav--active' : ''}`}
             onClick={() => setActiveSection('tags')}
           >
-            Tags
+            {copy.nav.tags}
           </button>
           <button
             type="button"
             className={`admin-panel-nav ${activeSection === 'settings' ? 'admin-panel-nav--active' : ''}`}
             onClick={() => setActiveSection('settings')}
           >
-            Settings
+            {copy.nav.settings}
           </button>
         </aside>
         <section className="admin-panel-main">
           {activeSection === 'categories' ? (
             <div className="admin-panel-card">
               <div className="admin-panel-header">
-                <h1>Categories</h1>
+                <h1>{copy.categories.heading}</h1>
                 <button className="btn primary" type="button" onClick={handleAddCategory}>
-                  Add New Category
+                  {copy.categories.addNew}
                 </button>
               </div>
               <div className="admin-panel-toolbar">
                 <input
                   type="search"
                   className="admin-panel-search"
-                  placeholder="Search..."
+                  placeholder={copy.categories.searchPlaceholder}
                   value={searchTerm}
                   onChange={(event) => setSearchTerm(event.target.value)}
                 />
               </div>
-              {isLoading ? <p className="admin-panel-status">Loading categories...</p> : null}
+              {isLoading ? <p className="admin-panel-status">{copy.categories.loading}</p> : null}
               {isError ? (
                 <p className="admin-panel-status admin-panel-status--error">
-                  Unable to load categories. Please try again.
+                  {copy.categories.error}
                 </p>
               ) : null}
               {!isLoading && !isError && rows.length === 0 ? (
-                <p className="admin-panel-status">No categories found.</p>
+                <p className="admin-panel-status">{copy.categories.empty}</p>
               ) : null}
               {!isLoading && rows.length > 0 ? (
                 <div className="admin-panel-table">
                   <div className="admin-panel-row admin-panel-row--header">
-                    <span>ID</span>
-                    <span>Name</span>
-                    <span>Type</span>
-                    <span>Active</span>
-                    <span>Actions</span>
+                    <span>{copy.categories.table.id}</span>
+                    <span>{copy.categories.table.name}</span>
+                    <span>{copy.categories.table.type}</span>
+                    <span>{copy.categories.table.active}</span>
+                    <span>{copy.categories.table.actions}</span>
                   </div>
                   {rows.map((row) => (
                     <div key={`${row.kind}-${row.id}`} className="admin-panel-row">
@@ -381,10 +382,10 @@ function AdminPanelPage() {
                       <span>{row.active ? '✓' : '✗'}</span>
                       <span className="admin-panel-actions">
                         <button type="button" className="btn ghost" onClick={() => handleEditCategory(row)}>
-                          Edit
+                          {copy.categories.actions.edit}
                         </button>
                         <button type="button" className="btn ghost" disabled>
-                          Delete
+                          {copy.categories.actions.delete}
                         </button>
                       </span>
                     </div>
@@ -404,9 +405,9 @@ function AdminPanelPage() {
       {isModalOpen ? (
         <div className="admin-modal">
           <div className="admin-modal__panel">
-            <h2>{editingRow ? 'Edit Category' : 'Add Category'}</h2>
+            <h2>{editingRow ? copy.modal.editTitle : copy.modal.addTitle}</h2>
             <label className="field">
-              <span>Name</span>
+              <span>{copy.modal.fields.name}</span>
               <input
                 type="text"
                 value={formState.name}
@@ -414,7 +415,7 @@ function AdminPanelPage() {
               />
             </label>
             <label className="field">
-              <span>Description</span>
+              <span>{copy.modal.fields.description}</span>
               <input
                 type="text"
                 value={formState.description}
@@ -422,20 +423,20 @@ function AdminPanelPage() {
               />
             </label>
             <label className="field">
-              <span>Type</span>
+              <span>{copy.modal.fields.type}</span>
               <select
                 value={formState.kind}
                 onChange={(event) => handleFormChange('kind', event.target.value as ClassifierKind)}
               >
-                <option value="currency">Currency</option>
-                <option value="paymentType">Payment type</option>
-                <option value="period">Period</option>
-                <option value="specialty">Specialty</option>
+                <option value="currency">{copy.modal.options.currency}</option>
+                <option value="paymentType">{copy.modal.options.paymentType}</option>
+                <option value="period">{copy.modal.options.period}</option>
+                <option value="specialty">{copy.modal.options.specialty}</option>
               </select>
             </label>
             {formState.kind === 'currency' ? (
               <label className="field">
-                <span>Coefficient</span>
+                <span>{copy.modal.fields.coefficient}</span>
                 <input
                   type="number"
                   value={formState.coefficient}
@@ -445,7 +446,7 @@ function AdminPanelPage() {
             ) : null}
             {formState.kind === 'period' ? (
               <label className="field">
-                <span>Period time</span>
+                <span>{copy.modal.fields.periodTime}</span>
                 <input
                   type="number"
                   value={formState.periodTime}
@@ -454,7 +455,7 @@ function AdminPanelPage() {
               </label>
             ) : null}
             <label className="field admin-modal__checkbox">
-              <span>Active</span>
+              <span>{copy.modal.fields.active}</span>
               <input
                 type="checkbox"
                 checked={formState.active}
@@ -468,10 +469,10 @@ function AdminPanelPage() {
             ) : null}
             <div className="admin-modal__actions">
               <button type="button" className="btn primary" onClick={handleSave}>
-                Save
+                {copy.modal.buttons.save}
               </button>
               <button type="button" className="btn ghost" onClick={handleModalClose}>
-                Cancel
+                {copy.modal.buttons.cancel}
               </button>
             </div>
           </div>
