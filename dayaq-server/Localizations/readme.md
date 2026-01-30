@@ -85,5 +85,11 @@ Return validation errors like:
 | ERR00053 | Refresh token format is invalid. |
 | ERR00054 | Refresh token is invalid or expired. |
 | ERR00055 | Doctor registered |
+| ERR00056 | Doctor cannot found |
+| ERR00057 | Doctor specalty cannot found |
+| ERR00058 | Doctor is not confirmed yet. Doctor cannot confirm specialty before Doctor Confirm|
 | ERR00100 | Unexpected error contact with admin | |
 | ERR00101 | Invalid object type | |
+| ERR00102 | Page number must be greater than 0. | |
+| ERR00103 | Page size must be greater than 0. | |
+| ERR00104 | Page size must not exceed 100. | |
